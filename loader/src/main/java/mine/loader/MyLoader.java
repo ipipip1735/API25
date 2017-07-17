@@ -1,63 +1,65 @@
 package mine.loader;
 
-import android.app.LoaderManager;
 import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
+
 /**
- * Created by Administrator on 2017/4/15.
+ * Created by Administrator on 2017/7/9.
  */
 
-public class MyLoader implements LoaderManager.LoaderCallbacks {
-
-    public Context context = null;
-
+public class MyLoader<String> extends Loader<String> {
+    /**
+     * Stores away the application context associated with context.
+     * Since Loaders can be used across multiple activities it's dangerous to
+     * store the context directly; always use {@link #getContext()} to retrieve
+     * the Loader's Context, don't use the constructor argument directly.
+     * The Context returned by {@link #getContext} is safe to use across
+     * Activity instances.
+     *
+     * @param context used to retrieve the application context.
+     */
     public MyLoader(Context context) {
-        this.context = context;
+
+        super(context);
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        System.out.println("--------  onCreateLoader  --------");
-
-
-
-
-        String sortOrder = "_id";
-        String[] projection = new String[]{
-                "_id",
-                "person_name",
-                "person_age"
-        };
-        Uri uri = Uri.parse("content://ABC");
-
-        Loader<Cursor> cursorLoader = new CursorLoader(context, uri, projection, null, null, sortOrder);
-        return cursorLoader;
+    protected void onStartLoading() {
+        super.onStartLoading();
+        System.out.println("-------MyLoader.onStartLoading------");
+        System.out.println(isStarted());
+        forceLoad();
     }
 
     @Override
-    public void onLoadFinished(android.content.Loader loader, Object data) {
-        System.out.println("--------  onLoadFinished  --------");
-
-        System.out.println(loader);
-        System.out.println(data);
+    protected void onForceLoad() {
+        super.onForceLoad();
+        System.out.println("-------MyLoader.onForceLoad------");
+        String s = (String) "ok!";
+        deliverResult(s);
     }
 
     @Override
-    public void onLoaderReset(android.content.Loader loader) {
-        System.out.println("--------  onLoaderReset  --------");
-
-
-
-        System.out.println(loader);
-
+    protected void onStopLoading() {
+        super.onStopLoading();
+        System.out.println("-------MyLoader.onStopLoading------");
     }
 
+    @Override
+    protected void onAbandon() {
+        super.onReset();
+        System.out.println("-------MyLoader.onAbandon------");
+    }
 
+    @Override
+    protected boolean onCancelLoad() {
+        System.out.println("-------MyLoader.onCancelLoad------");
+        return super.onCancelLoad();
+    }
 
-
-
+    @Override
+    protected void onReset() {
+        super.onReset();
+        System.out.println("-------MyLoader.onReset------");
+    }
 }

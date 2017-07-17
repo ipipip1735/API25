@@ -2,7 +2,6 @@ package mine.loader;
 
 import android.content.Intent;
 import android.content.Loader;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +16,7 @@ import java.util.Set;
 
 public class ExampleActivity extends AppCompatActivity {
 
-    public MyLoader myLoader = new MyLoader(this);
+    public LoaderCallback loaderCallback = new LoaderCallback(this);
 
 
     @Override
@@ -136,7 +135,7 @@ public class ExampleActivity extends AppCompatActivity {
         };
         String sortOrder = "_id";
 
-        Loader loader = getLoaderManager().initLoader(0, null, myLoader);
+        Loader loader = getLoaderManager().initLoader(0, null, loaderCallback);
         System.out.println(loader);
 
 
@@ -145,7 +144,7 @@ public class ExampleActivity extends AppCompatActivity {
 
     public void restartLoader(View view) {
 
-        Loader loader = getLoaderManager().restartLoader(0, null, myLoader);
+        Loader loader = getLoaderManager().restartLoader(0, null, loaderCallback);
         System.out.println(loader);
     }
 
