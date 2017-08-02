@@ -21,7 +21,9 @@ public class ComponentsActivity extends AppCompatActivity {
         System.out.println("**********  Example  onCreate  ***********");
 
         setContentView(R.layout.activity_button);
-        TextView textView = (TextView) findViewById(R.id.textView);
+//        TextView textView = (TextView) findViewById(R.id.textView);
+        System.out.println("complete");
+
 
 
     }
@@ -95,12 +97,19 @@ public class ComponentsActivity extends AppCompatActivity {
 
     public void addView(View view) {
 
-        TextView textView = new TextView(this);
-        textView.setText("my text");
-        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.viewContainer);
-        viewGroup.addView(textView);
+//        TextView textView = new TextView(this);
+//        textView.setText("my text");
+//        ViewGroup viewGroup = (ViewGroup)findViewById(R.id.viewContainer);
+//        viewGroup.addView(textView);
+//        System.out.println("****button.addView*****");
+//        findViewById(R.id.Custom).requestLayout();
+        CustomView customView = (CustomView) findViewById(R.id.Custom);
+//        customView.invalidate();
+        customView.setX(6);
+//        customView.setPadding(200,20,200,300);
 
-
+        TextView textView = (TextView) findViewById(R.id.textView);
+        textView.setPadding(10,20, 300, 400);
 
 
     }

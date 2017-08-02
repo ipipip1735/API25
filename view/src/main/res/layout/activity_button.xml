@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
     <LinearLayout
+        xmlns:mine="http://schemas.android.com/apk/res/mine.view"
         android:id="@+id/viewContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
         android:orientation="horizontal">
 
         <TextView
@@ -14,6 +17,45 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TextView"/>
+
+
+        <mine.view.CustomViewGroup
+        android:id="@+id/CustomGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/Aqua">
+
+        <mine.view.CustomView
+            android:id="@+id/Custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:padding="50px"
+            mine:labelYY="tttttt"/>
+
+        </mine.view.CustomViewGroup>
+
+
+        <!--<mine.view.PieChart-->
+        <!--android:id="@+id/Pie"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:padding="10dp"-->
+        <!--android:layout_weight="100"-->
+        <!--mine:showText="true"-->
+        <!--mine:labelHeight="20dp"-->
+        <!--mine:labelWidth="110dp"-->
+        <!--mine:labelY="85dp"-->
+        <!--mine:labelPosition="left"-->
+        <!--mine:highlightStrength="1.12"-->
+        <!--android:background="@android:color/white"-->
+        <!--mine:pieRotation="0"-->
+        <!--mine:labelColor="@android:color/black"-->
+        <!--mine:autoCenterPointerInSlice="true"-->
+        <!--mine:pointerRadius="4dp"-->
+        <!--/>-->
+
+
     </LinearLayout>
 
 
