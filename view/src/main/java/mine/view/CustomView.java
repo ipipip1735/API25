@@ -33,14 +33,14 @@ public class CustomView extends View {
         super(context, attrs);
         initLabelView();
         System.out.println("**********  CustomView.Constructor''  ***********");
-//        TypedArray a = context.obtainStyledAttributes(
-//                attrs,
-//                R.styleable.CustomViewGroup,
-//                0, 0
-//        );
-//        labelYY = a.getString(R.styleable.CustomViewGroup_labelYY);
-//        System.out.println(labelYY);
-//        a.recycle();
+        TypedArray a = context.obtainStyledAttributes(
+                attrs,
+                R.styleable.CustomViewGroup,
+                0, 0
+        );
+        labelYY = a.getString(R.styleable.CustomViewGroup_labelYY);
+        System.out.println(labelYY);
+        a.recycle();
 
 
 

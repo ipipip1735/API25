@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Iterator;
+
 
 /**
  * Created by Administrator on 2017/7/25.
@@ -25,12 +27,18 @@ public class CustomViewGroup extends ViewGroup {
     public CustomViewGroup(Context context, AttributeSet attrs) {
         super(context, attrs);
         System.out.println("**********  CustomViewGroup.Constructor''  ***********");
+//        for (int i = 0; i < attrs.getAttributeCount(); i++) {
+//            attrs.getAttributeName(i);
+//            System.out.println(attrs.getAttributeName(i));
+//        }
+
 //        TypedArray a = context.getTheme().obtainStyledAttributes(
 //                attrs,
 //                R.styleable.PieChart,
 //                0, 0
 //        );
 //        a.recycle();
+
     }
 
     public CustomViewGroup(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -107,6 +115,7 @@ public class CustomViewGroup extends ViewGroup {
             super(width, height);
             System.out.println("**********  CustomLayoutParams.Constructor'-'  ***********");
         }
+
         public CustomLayoutParams(MarginLayoutParams source) {
             super(source);
             System.out.println("**********  CustomLayoutParams.Constructor'  ***********");
