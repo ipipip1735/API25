@@ -3,6 +3,7 @@ package test.drag;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -20,7 +21,6 @@ public class MyLL extends LinearLayout {
         System.out.println("--------  MyLL Constructor  --------");
 
     }
-
 
 
 //    @Override
@@ -75,6 +75,11 @@ public class MyLL extends LinearLayout {
 //    }
 
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        System.out.println("*****  myll.onTouchEvent  *******");
+        return super.onTouchEvent(event);
+    }
 
 
 }

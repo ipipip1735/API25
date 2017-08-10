@@ -1,23 +1,20 @@
 package test.drag;
 
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.Set;
 
 /**
  * Created by Administrator on 2016/5/4.
  */
-public class ExampleActivity extends AppCompatActivity {
+public class EventsActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private ImageView targetImageView;
@@ -133,99 +130,20 @@ public class ExampleActivity extends AppCompatActivity {
 // button callback
     public void start(View view) {
         System.out.println("######  start  ######");
-        bindLongClick(this.imageView);
-        bindLongClick(this.targetImageView);
-
 
     }
 
     public void stop(View view) {
         System.out.println("######  stop  ######");
-        bindDrag(this.imageView);
-        bindDrag(this.targetImageView);
+
     }
 
 
 // drag event
-    private void startDrag(ImageView imageView) {
-        System.out.println("######  startDrag  ######");
-        View.DragShadowBuilder myShadow = new MyDragShadowBuilder(imageView);
-
-        ClipData.Item item = new ClipData.Item("myImage");
-        String[] MIME = {"AA", "BB"};
-        ClipData dragData = new ClipData("Drag", MIME, item);
-
-        imageView.startDrag(dragData, myShadow, null, 0);
-
-    }
 
 
-    private void bindLongClick(View imageView) {
-
-        imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                System.out.println("*****  onLongClick  ******");
-                ImageView imageView = (ImageView) view;
-                System.out.println(imageView);
-                startDrag(imageView);
-                return false;
-            }
-        });
-
-    }
 
 
-    private void bindDrag(final View imageView) {
-
-        imageView.setOnDragListener(new View.OnDragListener() {
-            @Override
-            public boolean onDrag(View view, DragEvent dragEvent) {
-                System.out.println("*****  onDrag  ******");
-                // Defines a variable to store the action type for the incoming event
-                final int action = dragEvent.getAction();
-
-                System.out.println(imageView.toString() + " |  " + action);
-
-
-                // Handles each of the expected events
-                switch(action) {
-
-                    case DragEvent.ACTION_DRAG_STARTED:
-                        System.out.println("---->>  DRAG_started  <<----");
-                            return true;
-
-                    case DragEvent.ACTION_DRAG_ENTERED:
-                        System.out.println("---->>  DRAG_entered  <<----");
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_LOCATION:
-                        System.out.println("---->>  DRAG_location  <<----");
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_EXITED:
-                        System.out.println("---->>  DRAG_exited  <<----");
-                        return true;
-
-                    case DragEvent.ACTION_DROP:
-                        System.out.println("---->>  DRAG_drop  <<----");
-                        return true;
-
-                    case DragEvent.ACTION_DRAG_ENDED:
-                        System.out.println("---->>  DRAG_ended  <<----");
-                        return true;
-
-                    default:
-                        System.out.println("---->>  DRAG_default  <<----");
-                        break;
-                }
-
-                return false;
-            }
-        });
-
-
-    }
 
 
 
