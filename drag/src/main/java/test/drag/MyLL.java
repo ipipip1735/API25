@@ -75,10 +75,45 @@ public class MyLL extends LinearLayout {
 //    }
 
 
+//    @Override
+//    public boolean onInterceptTouchEvent(MotionEvent ev) {
+//        System.out.println("*****  myll.onInterceptTouchEvent  *******");
+//            System.out.println(ev.getAction());
+//        if (ev.getAction() == MotionEvent.ACTION_MOVE) {
+//            return true;
+//        }
+//        return super.onInterceptTouchEvent(ev);
+////        return readMotionAction(ev.getAction());
+//    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         System.out.println("*****  myll.onTouchEvent  *******");
-        return super.onTouchEvent(event);
+        System.out.println(event);
+//        System.out.println(event.getAction());
+//        System.out.println(event.getActionMasked());
+        return readMotionAction(event.getAction());
+//        return super.onTouchEvent(event);
+    }
+
+
+    private boolean readMotionAction(int action) {
+        switch (action) {
+
+            case MotionEvent.ACTION_DOWN:
+                System.out.println("---->>  ACTION_DOWN  <<----");
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                System.out.println("---->>  ACTION_MOVE  <<----");
+                return true;
+            case MotionEvent.ACTION_UP:
+                System.out.println("---->>  ACTION_UP  <<----");
+                return true;
+            default:
+                System.out.println("---->>  DRAG_default  <<----");
+                break;
+        }
+        return false;
     }
 
 

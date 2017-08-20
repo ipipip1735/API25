@@ -141,13 +141,14 @@ public class TargetActivity extends AppCompatActivity {
 
 
     private void startDrag() {
-        View.DragShadowBuilder myShadow = new MyDragShadowBuilder(imageView);
+//        View.DragShadowBuilder myShadow = new MyDragShadowBuilder(imageView);
+        View.DragShadowBuilder myShadow = new MyDragShadowBuilder(targetImageView);
 
         ClipData.Item item = new ClipData.Item("myImage");
         String[] MIME = {"AA", "BB"};
         ClipData dragData = new ClipData("Drag", MIME, item);
 
-        imageView.startDrag(dragData, myShadow, null, 0);
+        imageView.startDragAndDrop(dragData, myShadow, null, 0);
 
     }
 
@@ -173,7 +174,7 @@ public class TargetActivity extends AppCompatActivity {
         imageView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
-                System.out.println("*****  onDrag  ******");
+                System.out.println("*****  imageView.onDrag  ******");
                 // Defines a variable to store the action type for the incoming event
                 final int action = dragEvent.getAction();
 
@@ -220,7 +221,7 @@ public class TargetActivity extends AppCompatActivity {
         targetImageView.setOnDragListener(new View.OnDragListener() {
             @Override
             public boolean onDrag(View view, DragEvent dragEvent) {
-                System.out.println("*****  onDrag  ******");
+                System.out.println("*****  targetImageView.onDrag  ******");
                 // Defines a variable to store the action type for the incoming event
                 final int action = dragEvent.getAction();
 
