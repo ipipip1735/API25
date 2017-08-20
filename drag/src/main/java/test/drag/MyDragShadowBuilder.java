@@ -25,19 +25,19 @@ public class MyDragShadowBuilder extends View.DragShadowBuilder {
 
     @Override
     public void onProvideShadowMetrics(Point shadowSize, Point shadowTouchPoint) {
-        System.out.println("*****  onProvideShadowMetrics  ****");
+        System.out.println("*****  MyDragShadowBuilder.onProvideShadowMetrics  ****");
         shadowSize.set(500, 500);
         shadowTouchPoint.set(0, 0);
 //        super.onProvideShadowMetrics(shadowSize, shadowTouchPoint);
     }
 
-    @Override
-    public void onDrawShadow(Canvas canvas) {
-        System.out.println("*****  onDrawShadow  ****");
-
-        canvas.drawColor(Color.BLACK);
-        super.onDrawShadow(canvas);
-    }
+//    @Override
+//    public void onDrawShadow(Canvas canvas) {
+//        System.out.println("*****  MyDragShadowBuilder.onDrawShadow  ****");
+//
+////        canvas.drawColor(Color.BLACK);
+//        super.onDrawShadow(canvas);
+//    }
 
 
 }

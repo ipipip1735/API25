@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.DragEvent;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -18,22 +19,6 @@ public class EventsActivity extends AppCompatActivity {
 
     private ImageView imageView;
     private ImageView targetImageView;
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        System.out.println("*******  Example  onCreateMenu!  *********");
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        System.out.println("*******  Example  onPrepareMenu!!!  *********");
-        return super.onPrepareOptionsMenu(menu);
-    }
 
 
     @Override
@@ -59,78 +44,11 @@ public class EventsActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        System.out.println("****  Example  onNewIntent  *****");
-        super.onNewIntent(intent);
-    }
 
-
-    @Override
-    protected void onStart() {
-        System.out.println("****Example  onStart*****");
-        super.onStart();
-
-    }
-
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        System.out.println("****  Example  onRestoreInstanceState  *****");
-        super.onRestoreInstanceState(savedInstanceState);
-    }
-
-
-    @Override
-    protected void onRestart() {
-        System.out.println("****  Example  onRestart  *****");
-        super.onRestart();
-    }
-
-    @Override
-    protected void onResume() {
-        System.out.println("****  Example  onResume  ***");
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        System.out.println("****  Example  onPause  ***");
-        super.onPause();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        System.out.println("********  Example  onBackPressed  **********");
-        super.onBackPressed();
-    }
-
-
-    @Override
-    protected void onStop() {
-        System.out.println("****  Example  onStop  *****");
-        super.onStop();
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        System.out.println("****  Example   onSaveInstanceState  *****");
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onDestroy() {
-        System.out.println("****  Example  onDestroy  *****");
-        super.onDestroy();
-    }
-
-
-// button callback
+    // button callback
     public void start(View view) {
         System.out.println("######  start  ######");
-
+        init();
     }
 
     public void stop(View view) {
@@ -141,11 +59,35 @@ public class EventsActivity extends AppCompatActivity {
 
 // drag event
 
+    private void init() {
+        this.imageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println(">>>>> imageView.onTouch <<<<<");
+                System.out.println(v);
+                System.out.println(event);
+                if (event.getAction() == event.ACTION_UP) {
+                    System.out.println("ACTION_UP");
+                }
+                return true;
+//                return false;
+            }
+        });
 
-
-
-
-
+        this.targetImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                System.out.println(">>>>> targetImageView.onTouch <<<<<");
+                System.out.println(v);
+                System.out.println(event);
+                if (event.getAction() == event.ACTION_UP) {
+                    System.out.println("ACTION_UP");
+                }
+                return true;
+//                return false;
+            }
+        });
+    }
 
 
 }
