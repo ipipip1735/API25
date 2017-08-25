@@ -7,11 +7,13 @@ import android.animation.Keyframe;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.animation.TimeInterpolator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
@@ -32,7 +34,6 @@ import java.util.Set;
  * Created by Administrator on 2016/7/14.
  */
 public class AnimationActivity extends AppCompatActivity {
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +56,6 @@ public class AnimationActivity extends AppCompatActivity {
         super.onCreate(bundle);
         System.out.println("**********  Example  onCreate  ***********");
 
-        setContentView(R.layout.activity_animation);
         if (bundle == null) {
             System.out.println("Example bundle is empty");
         } else {
@@ -65,6 +65,8 @@ public class AnimationActivity extends AppCompatActivity {
                 System.out.println(i);
             }
         }
+
+        setContentView(R.layout.activity_animation);
 
 
     }
@@ -139,28 +141,32 @@ public class AnimationActivity extends AppCompatActivity {
 
     public void start(View view) {
         System.out.println("********start******");
-//        frame();
-//        property();
 //        valueAnimator();
 //        objectAnimator();
-//        keyFrame();
+//        animatorSet();
+        tween();
+//        viewAnimator();
+//        frame();
+//        property();
+//        keyFrameAnimator();
 //        TypeEvalutors();
 //        LayoutTransition();
-
     }
 
     public void stop(View view) {
         System.out.println("********stop******");
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout3);
+        linearLayout.removeViewAt(0);
+
     }
 
 
     private void tween() {
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
 //        imageView.setImageResource(R.drawable.cd);
-        ImageView image = (ImageView) findViewById(R.id.image);
-
-//        Animation hyperspaceJump = AnimationUtils.loadAnimation(this, R.anim.tween);
-//        imageView.startAnimation(hyperspaceJump);
+//        ImageView image = (ImageView) findViewById(R.id.image);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        Animation hyperspaceJump = AnimationUtils.loadAnimation(this, R.anim.tween);
+        imageView.startAnimation(hyperspaceJump);
     }
 
 
@@ -192,14 +198,32 @@ public class AnimationActivity extends AppCompatActivity {
     private void valueAnimator() {
         System.out.println("***** property ******");
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-
-        ValueAnimator va = ValueAnimator.ofInt(0, 300);
+//        ValueAnimator va = ValueAnimator.ofInt(0,67);
+        ValueAnimator va = ValueAnimator.ofInt(10, 67, 25);
         va.setDuration(3000);
-        va.setTarget(imageView);
+        va.setInterpolator(new TimeInterpolator() {
+            @Override
+            public float getInterpolation(float input) {
+                System.out.println("input is " + input);
+                return input;
+            }
+        });
+
+//        va.setEvaluator(new TypeEvaluator() {
+//            @Override
+//            public Object evaluate(float fraction, Object startValue, Object endValue) {
+//                System.out.println("  >>> evaluate <<<");
+//                System.out.println(fraction);
+//                System.out.println(startValue);
+//                System.out.println(endValue);
+//                return fraction*100;
+//            }
+//        });
+
         va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
+                System.out.println("  >>> update <<<");
                 int i = (int) animation.getAnimatedValue();
                 System.out.println(i);
 
@@ -234,39 +258,123 @@ public class AnimationActivity extends AppCompatActivity {
     }
 
     private void objectAnimator() {
-
-
-//        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//        imageView.animate()
-//                .x(50f)
-//                .y(100f)
-//                .alpha(0.5f)
-//                .start();
-//        System.out.println("***animate****");
+        System.out.println("***animate****");
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        PropertyValuesHolder x = PropertyValuesHolder.ofFloat("x", 250f, 50f, 350f, 10f);
-        PropertyValuesHolder y = PropertyValuesHolder.ofFloat("y", 350f);
-        ObjectAnimator.ofPropertyValuesHolder(imageView, x, y).setDuration(5000).start();
+
+//        PropertyValuesHolder top = PropertyValuesHolder.ofInt("top", 250);
+//        PropertyValuesHolder s = PropertyValuesHolder.ofInt("scrollY", 350);
+
+        PropertyValuesHolder scalex = PropertyValuesHolder.ofFloat("scaleX", 1f,1.6f,2f);
+        PropertyValuesHolder scaley = PropertyValuesHolder.ofFloat("scaleY", 0f,0.6f,1f,1.3f);
+
+
+
+        ObjectAnimator o = ObjectAnimator.ofPropertyValuesHolder(imageView, scalex).setDuration(2000);
+//        ObjectAnimator o = ObjectAnimator.ofPropertyValuesHolder(imageView, scaley).setDuration(2000);
+//        ObjectAnimator o = ObjectAnimator.ofPropertyValuesHolder(imageView, scalex, scaley).setDuration(2000);
+        o.start();
+
+        o.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                System.out.println("  >>> update <<<");
+                System.out.println(animation.getAnimatedFraction());
+                System.out.println(animation.getAnimatedValue());
+            }
+        });
+//        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "x", 250f);
+//        animator.setDuration(3000).start();
 
 
     }
 
 
-    private void keyFrame() {
+    private void animatorSet() {
+
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+
+        ValueAnimator animator1 = ObjectAnimator.ofFloat(imageView, "alpha", 0.1f);
+        ValueAnimator animator2 = ObjectAnimator.ofFloat(imageView, "x", 500f);
+        ValueAnimator animator3 = ObjectAnimator.ofFloat(imageView, "y", 365f);
+        ValueAnimator animator4 = ObjectAnimator.ofFloat(imageView, "x", 365f);
+
+        animator1.setDuration(2000);
+        animator2.setDuration(2000);
+        animator3.setDuration(2000);
+        animator4.setDuration(2000);
+
+        AnimatorSet bouncer = new AnimatorSet();
+
+        bouncer.play(animator2).before(animator3);
+        bouncer.play(animator3).after(animator1);
+
+        bouncer.start();
+
+//        ValueAnimator fadeAnim = ObjectAnimator.ofFloat(newBall, "alpha", 1f, 0f);
+//        fadeAnim.setDuration(250);
+//        AnimatorSet animatorSet = new AnimatorSet();
+//        animatorSet.play(bouncer).before(fadeAnim);
+//        animatorSet.start();
+    }
+
+
+    private void viewAnimator() {
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.animate()
+                .x(50f)
+                .y(100f)
+                .alpha(0.5f)
+                .start();
+    }
+
+
+    private void keyFrameAnimator() {
 
         System.out.println("*****keyFrame*****");
 
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
 
-        AccelerateInterpolator aInterpolator = new AccelerateInterpolator();
-        DecelerateInterpolator dInterpolator = new DecelerateInterpolator();
-        Keyframe keyframe0 = Keyframe.ofFloat(0f, 10f);
-        keyframe0.setInterpolator(aInterpolator);
-        Keyframe keyframe1 = Keyframe.ofFloat(0.5f, 450f);
-        keyframe1.setInterpolator(dInterpolator);
-        Keyframe keyframe4 = Keyframe.ofFloat(1f, 50f);
 
+        Keyframe keyframe0 = Keyframe.ofFloat(0f);
+        Keyframe keyframe1 = Keyframe.ofFloat(0.1f, 600f);
+        Keyframe keyframe2 = Keyframe.ofFloat(1f, 100f);
+
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofKeyframe("x", keyframe0, keyframe1, keyframe2);
+
+
+        ObjectAnimator anim = ObjectAnimator.ofPropertyValuesHolder(imageView, pvhX);
+
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                System.out.println("  >>> update <<<");
+                System.out.println(animation.getAnimatedFraction());
+                System.out.println(animation.getAnimatedValue());
+            }
+        });
+//        anim.setEvaluator(new TypeEvaluator() {
+//            @Override
+//            public Object evaluate(float fraction, Object startValue, Object endValue) {
+//                System.out.println("  >>> evaluate <<<");
+//                System.out.println(fraction);
+//                System.out.println(startValue);
+//                System.out.println(endValue);
+//                return fraction*100;
+//            }
+//        });
+        anim.setDuration(5000);
+        anim.start();
+
+
+//        AccelerateInterpolator aInterpolator = new AccelerateInterpolator();
+//        DecelerateInterpolator dInterpolator = new DecelerateInterpolator();
+//        Keyframe keyframe0 = Keyframe.ofFloat(0f, 10f);
+//        keyframe0.setInterpolator(aInterpolator);
+//        Keyframe keyframe1 = Keyframe.ofFloat(0.5f, 450f);
+//        keyframe1.setInterpolator(dInterpolator);
+//        Keyframe keyframe4 = Keyframe.ofFloat(1f, 50f);
+//
 //        PropertyValuesHolder x = PropertyValuesHolder.ofKeyframe("x", keyframe0, keyframe1, keyframe4);
 //        PropertyValuesHolder y = PropertyValuesHolder.ofKeyframe("y", keyframe0, keyframe1, keyframe4);
 //        ObjectAnimator.ofPropertyValuesHolder(imageView, x, y).setDuration(5000).start();
@@ -297,22 +405,84 @@ public class AnimationActivity extends AppCompatActivity {
 
     }
 
-    private int x = 20;
 
     private void LayoutTransition() {
-        LayoutTransition layoutTransition = new LayoutTransition();
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(null, "X", 0f, 90f);
-        layoutTransition.setAnimator(LayoutTransition.APPEARING, objectAnimator);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.ll);
+
+        LayoutTransition layoutTransition = new LayoutTransition();
+
+
+//        PropertyValuesHolder pvhLeft = PropertyValuesHolder.ofInt("left", 0, 1);
+        PropertyValuesHolder pvhLeft =
+                PropertyValuesHolder.ofInt("left", 0,0);
+        PropertyValuesHolder pvhTop =
+                PropertyValuesHolder.ofInt("top", 0, 0);
+        PropertyValuesHolder pvhRight =
+                PropertyValuesHolder.ofInt("right", 0, 0);
+        PropertyValuesHolder pvhBottom =
+                PropertyValuesHolder.ofInt("bottom", 0, 0);
+        PropertyValuesHolder pvhScaleX =
+                PropertyValuesHolder.ofFloat("scaleX", 1f,0f,1f);
+        PropertyValuesHolder pvhScaleY =
+                PropertyValuesHolder.ofFloat("scaleY", 1f, 1f);
+
+
+        ObjectAnimator x = ObjectAnimator.ofFloat(null, "x", 155f);
+        ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(
+                this, pvhLeft, pvhTop, pvhRight, pvhBottom, pvhScaleX);
+//                this, pvhLeft, pvhTop, pvhRight, pvhBottom, pvhScaleX, pvhScaleY);
+
+
+//        objectAnimator.addListener(new Animator.AnimatorListener() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//                System.out.println("-------onAnimationStart*****");
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animator animation) {
+//                System.out.println("-------onAnimationEnd*****");
+//            }
+//
+//            @Override
+//            public void onAnimationCancel(Animator animation) {
+//                System.out.println("-------onAnimationCancel*****");
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animator animation) {
+//
+//                System.out.println("-------onAnimationRepeat*****");
+//            }
+//        });
+
+        objectAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                System.out.println("change appearing");
+                System.out.println(animation.getAnimatedFraction());
+                System.out.println(animation.getAnimatedValue("top"));
+                System.out.println(animation.getAnimatedValue("left"));
+            }
+        });
+
+
+        Animator defaultA = layoutTransition.getAnimator(LayoutTransition.APPEARING);
+        Animator defaultCA = layoutTransition.getAnimator(LayoutTransition.CHANGE_APPEARING);
+
+        layoutTransition.setAnimator(LayoutTransition.APPEARING, x);
+        layoutTransition.setAnimator(LayoutTransition.CHANGE_APPEARING, objectAnimator);
+        layoutTransition.setDuration(5000l);
+
+
+        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout3);
         linearLayout.setLayoutTransition(layoutTransition);
 
         Button b1 = new Button(this);
-        linearLayout.addView(b1);
 
-
-
-
+        b1.setText("dddd" + Math.random());
+        linearLayout.addView(b1, 0);
+//        b1.setVisibility(View.GONE);
     }
 
 
