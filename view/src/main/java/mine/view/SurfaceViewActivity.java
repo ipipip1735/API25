@@ -20,54 +20,56 @@ import java.util.Random;
 
 public class SurfaceViewActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
-//    private SurfaceHolder mSurfaceHolder;
-private static final String TAG = "Svetlin SurfaceView";
+    //    private SurfaceHolder mSurfaceHolder;
+    private static final String TAG = "Svetlin SurfaceView";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_surface);
-//        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.msfv);
-//        surfaceView.getHolder().addCallback(this);
+        setContentView(R.layout.activity_surface);
+        SurfaceView surfaceView = (SurfaceView) findViewById(R.id.msfv);
+        surfaceView.getHolder().addCallback(this);
 
-        SurfaceView view = new SurfaceView(this);
-        setContentView(view);
-        view.getHolder().addCallback(this);
+//        SurfaceView view = new SurfaceView(this);
+        surfaceView.setZOrderOnTop(true);
+//        setContentView(view);
+//        view.getHolder().addCallback(this);
     }
 
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        tryDrawing(holder);
+
+        final SurfaceHolder h = holder;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    System.out.println("--");
+                    Canvas canvas = h.lockCanvas();
+                    canvas.drawRGB(255, 128, 128);
+                    Paint p = new Paint();
+                    p.setColor(getColor(R.color.AliceBlue));
+                    canvas.drawCircle(100f, 100f, 100f, p);
+                    h.unlockCanvasAndPost(canvas);
+                }
+
+            }
+        }).start();
+
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int frmt, int w, int h) {
-        tryDrawing(holder);
+
+
     }
 
     @Override
-    public void surfaceDestroyed(SurfaceHolder holder) {}
-
-    private void tryDrawing(SurfaceHolder holder) {
-        Log.i(TAG, "Trying to draw...");
-
-        Canvas canvas = holder.lockCanvas();
-        if (canvas == null) {
-            Log.e(TAG, "Cannot draw onto the canvas as it's null");
-        } else {
-            drawMyStuff(canvas);
-            holder.unlockCanvasAndPost(canvas);
-        }
+    public void surfaceDestroyed(SurfaceHolder holder) {
     }
 
-    private void drawMyStuff(final Canvas canvas) {
-        Random random = new Random();
-        Log.i(TAG, "Drawing...");
-        canvas.drawRGB(255, 128, 128);
-        Paint p = new Paint();
-        p.setColor(getColor(R.color.AliceBlue));
-        canvas.drawCircle(100f, 100f, 100f, p);
-    }
+
 }
 
 
