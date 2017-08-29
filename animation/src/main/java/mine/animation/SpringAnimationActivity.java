@@ -4,10 +4,14 @@ package mine.animation;
 import android.os.Bundle;
 import android.support.animation.DynamicAnimation;
 import android.support.animation.SpringAnimation;
+import android.support.animation.SpringForce;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+
 import java.util.Set;
 
 /**
@@ -54,7 +58,11 @@ public class SpringAnimationActivity extends AppCompatActivity {
 
     public void start(View view) {
         System.out.println("********start******");
-        spring();
+
+//            spring();
+        chainedSpringAnimation();
+//            fling();
+
     }
 
     public void stop(View view) {
@@ -66,15 +74,18 @@ public class SpringAnimationActivity extends AppCompatActivity {
 
     private void spring() {
 
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         SpringAnimation springAnimation = new SpringAnimation(imageView, DynamicAnimation.TRANSLATION_Y, 0);
 
-        springAnimation.setStartValue(500);
-        springAnimation.setStartVelocity(10);
+        springAnimation.setMinValue(0f);
+        springAnimation.setMaxValue(1000f);
+        springAnimation.setStartValue(230f);
 
-//        SpringForce force = new SpringForce();
-//        force.setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY).setStiffness(SpringForce.STIFFNESS_LOW);
-//        springAnimation.setSpring(force);
+        SpringForce force = new SpringForce();
+        force.setDampingRatio(SpringForce.DAMPING_RATIO_LOW_BOUNCY);
+        force.setStiffness(SpringForce.STIFFNESS_LOW);
+        force.setFinalPosition(0f);
+        springAnimation.setSpring(force);
 
         springAnimation.addUpdateListener(new DynamicAnimation.OnAnimationUpdateListener() {
             @Override
@@ -98,9 +109,34 @@ public class SpringAnimationActivity extends AppCompatActivity {
         });
 
         springAnimation.start();
+//        springAnimation.animateToFinalPosition(100);
 
     }
 
+
+    private void chainedSpringAnimation() {
+
+        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.linearLayout3);
+
+        viewGroup.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ImageView imageView1 = (ImageView) findViewById(R.id.imageView1);
+                imageView1.setX(event.getX());
+                imageView1.setY(event.getY());
+
+                ImageView imageView2 = (ImageView) findViewById(R.id.imageView2);
+                SpringAnimation springAnimationX = new SpringAnimation(imageView2, DynamicAnimation.TRANSLATION_X, 0);
+                SpringAnimation springAnimationY = new SpringAnimation(imageView2, DynamicAnimation.TRANSLATION_Y, 0);
+                springAnimationX.animateToFinalPosition(event.getX());
+                springAnimationY.animateToFinalPosition(event.getY());
+
+                return true;
+            }
+        });
+
+
+    }
 
 
     private void fling() {
@@ -114,11 +150,6 @@ public class SpringAnimationActivity extends AppCompatActivity {
 
 
     }
-
-
-
-
-
 
 
 }

@@ -145,8 +145,8 @@ public class AnimationActivity extends AppCompatActivity {
 //        objectAnimator();
 //        animatorSet();
 //        tween();
-        frame();
-//        viewAnimator();
+//        frame();
+        viewAnimator();
 //        property();
 //        keyFrameAnimator();
 //        TypeEvalutors();
