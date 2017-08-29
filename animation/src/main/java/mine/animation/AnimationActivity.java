@@ -144,9 +144,9 @@ public class AnimationActivity extends AppCompatActivity {
 //        valueAnimator();
 //        objectAnimator();
 //        animatorSet();
-        tween();
-//        viewAnimator();
+//        tween();
 //        frame();
+        viewAnimator();
 //        property();
 //        keyFrameAnimator();
 //        TypeEvalutors();
@@ -155,8 +155,10 @@ public class AnimationActivity extends AppCompatActivity {
 
     public void stop(View view) {
         System.out.println("********stop******");
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout3);
-        linearLayout.removeViewAt(0);
+//        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayout3);
+//        linearLayout.removeViewAt(0);
+//        animationDrawable.stop();
+
 
     }
 
@@ -173,10 +175,14 @@ public class AnimationActivity extends AppCompatActivity {
     private void frame() {
         System.out.println("*****  frame  ******");
         ImageView imageView = (ImageView) findViewById(R.id.imageView);
-//        imageView.setBackgroundResource(R.drawable.frame);
-
-
+        imageView.setBackgroundResource(R.drawable.frame);
         AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getBackground();
+        if (animationDrawable.isRunning()) {
+            System.out.println("is running!");
+            animationDrawable.stop();
+        }
+
+        animationDrawable.start();
         animationDrawable.start();
 
 
