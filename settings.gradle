@@ -1,1 +1,1 @@
-include ':appTemp', ':adapter', ':sqlitedb', ':loader', ':broadcast', ':services', ':myparcel', ':notification', ':preferences', ':menu', ':resource', ':webapp', ':view', ':activity', ':animation', ':drag', ':opengl'
+include ':appTemp', ':adapter', ':sqlitedb', ':loader', ':broadcast', ':services', ':myparcel', ':notification', ':preferences', ':menu', ':resource', ':webapp', ':view', ':activity', ':animation', ':drag', ':opengl', ':bluetooth'
