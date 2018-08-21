@@ -21,11 +21,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(bundle);
         System.out.println("**********  Example.onCreate  ***********");
 
-        setContentView(R.layout.activity_main);
+        baseGLSurfaceView = new BaseGLSurfaceView(this);
+        setContentView(baseGLSurfaceView);
 
-        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.linearLayout3);
-        MyGLSurfaceView myGLSurfaceView = new MyGLSurfaceView(this);
-        viewGroup.addView(myGLSurfaceView);
+//        setContentView(R.layout.activity_main);
+//
+//        ViewGroup viewGroup = (ViewGroup) findViewById(R.id.linearLayout3);
+//        MyGLSurfaceView myGLSurfaceView = new MyGLSurfaceView(this);
+//        viewGroup.addView(myGLSurfaceView);
 
 
     }
